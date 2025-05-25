@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Bite Side - Culinary Ebooks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .products {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #059669;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .cart-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .cart-total {
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #6b7280;
+            padding: 2rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .checkout-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .payment-form {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #2563eb;
+        }
+
+        .payment-method.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .payment-method img {
+            width: 60px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .przelewy24-info {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f0f9ff;
+            border-radius: 6px;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                🍽️ The Bite Side
+            </div>
+            <div class="nav-links">
+                <a href="#" onclick="showSection('home')">Home</a>
+                <a href="#" onclick="showSection('about')">About Us</a>
+                <a href="#" onclick="showSection('contact')">Contact</a>
+            </div>
+            <div class="nav-right">
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <div id="homeSection">
+        <section class="hero">
+            <div class="container">
+                <h1>Welcome to The Bite Side</h1>
+                <p>Discover the world's finest culinary ebooks and master the art of cooking</p>
+            </div>
+        </section>
+
+        <section class="products section">
+            <div class="container">
+                <h2 class="section-title">Featured Culinary Ebooks</h2>
+                <div class="product-grid" id="productGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Us Section -->
+    <div id="aboutSection" class="hidden">
+        <section class="hero">
+            <div class="container">
+                <h1>About The Bite Side</h1>
+                <p>Your gateway to culinary excellence through digital learning</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">Our Story</h2>
+                    <p>
+                        Founded in 2020 by a team of passionate food enthusiasts and digital publishing experts, 
+                        The Bite Side was born from a simple belief: everyone deserves access to world-class culinary knowledge. 
+                        We've partnered with renowned chefs, cookbook authors, and culinary schools to bring you 
+                        the most comprehensive collection of digital cookbooks and culinary guides.
+                    </p>
+                    <p style="margin-top: 1.5rem;">
+                        Whether you're a complete beginner looking to master the basics or a seasoned home cook 
+                        seeking to explore new cuisines, our carefully curated collection of ebooks offers 
+                        step-by-step guidance, professional techniques, and insider secrets from the culinary world.
+                    </p>
+                </div>
+
+                <div class="about-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">👨‍🍳</div>
+                        <h3>Expert Authors</h3>
+                        <p>Learn from Michelin-starred chefs, cookbook authors, and culinary school instructors</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Digital First</h3>
+                        <p>Instant downloads, searchable recipes, and multi-device compatibility</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Global Cuisine</h3>
+                        <p>Explore authentic recipes from every corner of the world</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Skill Building</h3>
+                        <p>Progressive learning paths from beginner to advanced techniques</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div id="contactSection" class="hidden">
+        <section class="hero">
+            <div class="container">
+                <h1>Contact The Bite Side</h1>
+                <p>We'd love to hear from you! Reach out with questions, suggestions, or just to say hello</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-card">
+                            <div class="feature-icon">📧</div>
+                            <h3>Email Us</h3>
+                            <p>hello@thebiteside.com</p>
+                            <p>support@thebiteside.com</p>
+                        </div>
+                        <div class="contact-card">
+                            <div class="feature-icon">📞</div>
+                            <h3>Call Us</h3>
+                            <p>+1 (555) 123-BITE</p>
+                            <p>Mon-Fri 9AM-6PM EST</p>
+                        </div>
+                        <div class="contact-card">
+                            <div class="feature-icon">📍</div>
+                            <h3>Visit Us</h3>
+                            <p>123 Culinary Street</p>
+                            <p>Foodie District, NY 10001</p>
+                        </div>
+                        <div class="contact-card">
+                            <div class="feature-icon">💬</div>
+                            <h3>Social Media</h3>
+                            <p>@TheBiteSide</p>
+                            <p>Follow us for daily recipes!</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <h3 style="margin-bottom: 1.5rem; color: #1f2937;">Send us a Message</h3>
+                        <form onsubmit="submitContactForm(event)">
+                            <div class="form-group">
+                                <label for="contactName">Your Name *</label>
+                                <input type="text" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address *</label>
+                                <input type="email" id="contactEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactSubject">Subject</label>
+                                <input type="text" id="contactSubject" placeholder="What's this about?">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">Message *</label>
+                                <textarea id="contactMessage" placeholder="Tell us what's on your mind..." required></textarea>
+                            </div>
+                            <button type="submit" class="checkout-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart" onclick="toggleCart()">×</button>
+            </div>
+            <div id="cartItems">
+                <div class="empty-cart">Your cart is empty</div>
+            </div>
+            <div class="cart-total" id="cartTotal"></div>
+            <button class="checkout-btn" id="checkoutBtn" onclick="startCheckout()" disabled>
+                Proceed to Checkout
+            </button>
+            
+            <!-- Payment Form -->
+            <div class="payment-form" id="paymentForm">
+                <h4 style="margin-bottom: 1rem; color: #1f2937;">Billing Information</h4>
+                
+                <div class="form-group">
+                    <label for="customerName">Full Name *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerEmail">Email Address *</label>
+                    <input type="email" id="customerEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number</label>
+                    <input type="tel" id="customerPhone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerAddress">Address</label>
+                    <input type="text" id="customerAddress">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="customerCity">City</label>
+                        <input type="text" id="customerCity">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPostal">Postal Code</label>
+                        <input type="text" id="customerPostal">
+                    </div>
+                </div>
+                
+                <h4 style="margin: 1.5rem 0 1rem; color: #1f2937;">Payment Method</h4>
+                <div class="payment-methods">
+                    <div class="payment-method selected" data-method="card">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💳</div>
+                        <div>Credit/Debit Card</div>
+                    </div>
+                    <div class="payment-method" data-method="blik">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📱</div>
+                        <div>BLIK</div>
+                    </div>
+                    <div class="payment-method" data-method="transfer">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏦</div>
+                        <div>Bank Transfer</div>
+                    </div>
+                    <div class="payment-method" data-method="paypal">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💰</div>
+                        <div>PayPal</div>
+                    </div>
+                </div>
+                
+                <div class="przelewy24-info">
+                    <strong>🔒 Secure Payment with Przelewy24</strong><br>
+                    Your payment will be processed securely through Przelewy24, Poland's leading payment gateway. 
+                    All transactions are encrypted and protected.
+                </div>
+                
+                <button class="checkout-btn" onclick="processPayment()" style="margin-top: 1.5rem;">
+                    📚 Purchase Ebooks with Przelewy24
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample culinary ebooks data
+        const products = [
+            { id: 1, name: "Mastering French Cuisine", price: 29.99, emoji: "🇫🇷", author: "Chef Antoine Dubois", pages: 250 },
+            { id: 2, name: "Italian Pasta Perfection", price: 24.99, emoji: "🍝", author: "Maria Rossini", pages: 180 },
+            { id: 3, name: "Asian Street Food Secrets", price: 19.99, emoji: "🥢", author: "Chef Liu Wei", pages: 320 },
+            { id: 4, name: "Artisan Bread Baking", price: 34.99, emoji: "🥖", author: "Baker Sarah Johnson", pages: 280 },
+            { id: 5, name: "Plant-Based Gourmet", price: 27.99, emoji: "🌱", author: "Chef Green Davis", pages: 200 },
+            { id: 6, name: "BBQ & Grilling Mastery", price: 22.99, emoji: "🔥", author: "Pitmaster Joe Smith", pages: 160 },
+            { id: 7, name: "Dessert Artistry", price: 31.99, emoji: "🍰", author: "Pastry Chef Emma Brown", pages: 240 },
+            { id: 8, name: "Spice Route Cookbook", price: 26.99, emoji: "🌶️", author: "Chef Priya Sharma", pages: 300 }
+        ];
+
+        let cart = [];
+        let selectedPaymentMethod = 'card';
+
+        // Przelewy24 Configuration (Demo values)
+        const P24_CONFIG = {
+            merchantId: 12345, // Your Przelewy24 Merchant ID
+            posId: 12345, // Your Przelewy24 POS ID
+            apiKey: 'your-api-key', // Your API key
+            crc: 'your-crc-key', // Your CRC key
+            sandbox: true // Set to false for production
+        };
+
+        // Load products
+        function loadProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">${product.emoji}</div>
+                    <div class="product-title">${product.name}</div>
+                    <div style="color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">
+                        by ${product.author} • ${product.pages} pages
+                    </div>
+                    <div class="product-price">${product.price}</div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">
+                        📚 Add to Library
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartUI();
+            
+            // Add some visual feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '📚 Added to Library!';
+            btn.style.background = '#059669';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#10b981';
+            }, 1000);
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                cartTotal.innerHTML = '';
+                checkoutBtn.disabled = true;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            ${item.price} × ${item.quantity}
+                        </div>
+                        <div>
+                            <button onclick="removeFromCart(${item.id})" style="
+                                background: #ef4444; 
+                                color: white; 
+                                border: none; 
+                                padding: 0.25rem 0.5rem; 
+                                border-radius: 4px; 
+                                cursor: pointer;
+                            ">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartTotal.innerHTML = `Total: ${total.toFixed(2)}`;
+                checkoutBtn.disabled = false;
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Toggle cart modal
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
+            }
+        });
+
+        // Initialize the shop
+        loadProducts();
+
+        // Start checkout process
+        function startCheckout() {
+            const paymentForm = document.getElementById('paymentForm');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            paymentForm.style.display = 'block';
+            checkoutBtn.style.display = 'none';
+        }
+
+        // Payment method selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    paymentMethods.forEach(m => m.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedPaymentMethod = this.dataset.method;
+                });
+            });
+        });
+
+        // Generate session ID for transaction
+        function generateSessionId() {
+            return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Create MD5 hash (simplified for demo - in production use proper crypto library)
+        function createMD5Hash(data) {
+            // This is a simplified demo hash - in production, implement proper MD5 or use server-side
+            return btoa(data).substr(0, 32);
+        }
+
+        // Process payment with Przelewy24
+        function processPayment() {
+            const customerName = document.getElementById('customerName').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            
+            // Basic validation
+            if (!customerName || !customerEmail) {
+                alert('Please fill in required fields (Name and Email)');
+                return;
+            }
+            
+            if (!customerEmail.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalInGrosze = Math.round(total * 100); // Convert to grosze (Polish cents)
+            const sessionId = generateSessionId();
+            
+            // Prepare transaction data
+            const transactionData = {
+                sessionId: sessionId,
+                amount: totalInGrosze,
+                currency: 'USD', // Changed to USD for ebooks
+                description: `The Bite Side - ${cart.length} culinary ebooks`,
+                email: customerEmail,
+                country: 'US',
+                language: 'en',
+                urlReturn: window.location.origin + '/payment-success',
+                urlStatus: window.location.origin + '/payment-status',
+                timeLimit: 15, // 15 minutes
+                channel: getChannelForPaymentMethod(selectedPaymentMethod),
+                method: selectedPaymentMethod === 'transfer' ? 'GET' : 'POST',
+                cart: cart.map((item, index) => ({
+                    sellerId: 'thebiteside',
+                    sellerCategory: 'digital_books',
+                    name: item.name,
+                    description: `Culinary ebook: ${item.name} by ${item.author}`,
+                    quantity: item.quantity,
+                    price: Math.round(item.price * 100),
+                    number: index + 1
+                }))
+            };
+            
+            // Show loading state
+            const payButton = event.target;
+            const originalText = payButton.textContent;
+            payButton.textContent = 'Processing...';
+            payButton.disabled = true;
+            
+            // Simulate API call to create transaction
+            setTimeout(() => {
+                // In a real implementation, you would send this data to your backend
+                // which would then communicate with Przelewy24 API
+                
+                console.log('Transaction data:', transactionData);
+                
+                // For demo purposes, simulate redirect to Przelewy24
+                if (confirm(`Demo Mode: This would redirect you to Przelewy24 payment gateway.\n\nTransaction Details:\n- Amount: ${total.toFixed(2)} USD\n- Method: ${selectedPaymentMethod}\n- Session ID: ${sessionId}\n- Items: ${cart.length} culinary ebooks\n\nProceed with demo payment?`)) {
+                    // Simulate successful payment
+                    simulatePaymentSuccess(sessionId, total);
+                } else {
+                    payButton.textContent = originalText;
+                    payButton.disabled = false;
+                }
+            }, 1500);
+        }
+
+        // Get Przelewy24 channel for payment method
+        function getChannelForPaymentMethod(method) {
+            const channels = {
+                'card': 0, // Credit/Debit cards
+                'blik': 181, // BLIK
+                'transfer': 25, // Online bank transfer
+                'paypal': 1013 // PayPal
+            };
+            return channels[method] || 0;
+        }
+
+        // Simulate payment success (for demo)
+        function simulatePaymentSuccess(sessionId, amount) {
+            const ebookTitles = cart.map(item => item.name).join(', ');
+            alert(`🎉 Payment Successful!\n\nSession ID: ${sessionId}\nAmount: ${amount.toFixed(2)} USD\n\nYour culinary ebooks are now available for download:\n${ebookTitles}\n\nCheck your email for download links!\n\nHappy cooking! 👨‍🍳`);
+            
+            // Clear cart and close modal
+            cart = [];
+            updateCartUI();
+            toggleCart();
+            
+            // Reset form
+            document.getElementById('paymentForm').style.display = 'none';
+            document.getElementById('checkoutBtn').style.display = 'block';
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerEmail').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+            document.getElementById('customerCity').value = '';
+            document.getElementById('customerPostal').value = '';
+        }
+
+        // Navigation functions
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('homeSection').classList.add('hidden');
+            document.getElementById('aboutSection').classList.add('hidden');
+            document.getElementById('contactSection').classList.add('hidden');
+            
+            // Show selected section
+            if (section === 'home') {
+                document.getElementById('homeSection').classList.remove('hidden');
+            } else if (section === 'about') {
+                document.getElementById('aboutSection').classList.remove('hidden');
+            } else if (section === 'contact') {
+                document.getElementById('contactSection').classList.remove('hidden');
+            }
+        }
+
+        // Contact form submission
+        function submitContactForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Simulate form submission
+            alert(`Thank you ${name}! 📧\n\nYour message has been sent successfully. We'll get back to you at ${email} within 24 hours.\n\nSubject: ${subject || 'General Inquiry'}\n\nHappy cooking! 🍽️`);
+            
+            // Reset form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactSubject').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+    </script>
+</body>
+</html>
